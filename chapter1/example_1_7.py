@@ -14,18 +14,24 @@ y0     = 1. # m
 v0     = 5. # m/s
 gamma0 = 60.*pi/180. # radian
 g      = 9.807 # m/s^2
-xmax = 5. # m
+tmax = 2. # s
 
-# Compute x and y
-x = linspace(x0,xmax,20)
+# Compute using y(t) for checking purposes
+t = linspace(0.,tmax,20)
+x = x0 + (v0*cos(gamma0))*t
+y1 = y0 + (v0*sin(gamma0))*t - 0.5*g*t**2
+
+# Compute using y(x)
 y = y0 + (x-x0)*tan(gamma0) - 0.5*g*(x-x0)**2 / (v0*cos(gamma0))**2
 
 # Plot trajectory
 fig = plt.figure()
 plt.grid()
 plt.arrow(x0, y0, v0*cos(gamma0), v0*sin(gamma0), color='r', label="v0", head_width=0.2)
-plt.plot(x, y, label="Trajectory")
+plt.plot(x, y, label="y(x)")
+plt.plot(x, y1, '-.', label="y(t)")
 plt.xlabel("x (m)")
 plt.ylabel("y (m)")
+plt.legend()
 plt.ylim(top=y0+1.1*v0*sin(gamma0))
 plt.show()
