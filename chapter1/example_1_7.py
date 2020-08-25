@@ -8,6 +8,9 @@ Written by: J.X.J. Bannwarth
 from numpy import linspace, tan, sin, cos, pi
 import matplotlib.pyplot as plt
 
+# Title
+print("Orbital Mechanics for Engineering Students Example 1.7")
+
 # Initial conditions
 x0     = 1. # m
 y0     = 1. # m
