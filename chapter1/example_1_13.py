@@ -20,7 +20,7 @@ def PrintVec(v, name, unit = '', inertial=True):
         print(f"{name} = {v[0]:.4f} i + {v[1]:.4f} j + {v[2]:.4f} k {unit}")
 
 # Title
-print("Orbital Mechanics for Engineering Students Example 1.6")
+print("Orbital Mechanics for Engineering Students Example 1.13")
 
 # Origin
 RO = array([100.,200.,300.]) # m
