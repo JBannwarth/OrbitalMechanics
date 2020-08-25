@@ -5,7 +5,10 @@ The *Atlantis* orbiter weighs 239,255 lb prior to liftoff. On orbit 18 at an alt
 (b) If no mass is lost between launch and orbin 18, what is the weight of *Atlantis* in pounds?
 Written by: J.X.J. Bannwarth
 """
+# Title
+print("Orbital Mechanics for Engineering Students Example 1.9")
 
+# Variables
 g0 = 9.807 # m/s^2
 lb2kg = 0.4536 # kg
 
@@ -16,11 +19,13 @@ rE = 6378000. # km
 zOrbit18 = 350000. # km
 
 # (a)
+print("(a)")
 mLiftoff = wLiftoff*lb2kg
 mOrbit18 = wOrbit18*lb2kg
 print(f"m_launchpad = {mLiftoff:.2f} kg, m_orbit18 = {mOrbit18:.2f} kg")
 
 # (b)
+print("(b)")
 g = g0 / (1. + zOrbit18/rE)**2
 wOrbit18NoLoss = wLiftoff*g/g0
 print(f"w_orbit18 = {wOrbit18NoLoss:.2f} lbf")
