@@ -11,7 +11,6 @@ Written by: J.X.J. Bannwarth
 from numpy import array, pi, cos, sin
 from numpy.linalg import norm
 
-
 def PrintVec(v, name, unit = '', inertial=True):
     if inertial:
         print(f"{name} = {v[0]:,.4f} I + {v[1]:,.4f} J + {v[2]:,.4f} K {unit}")
