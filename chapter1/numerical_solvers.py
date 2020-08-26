@@ -1,5 +1,7 @@
-""" Implementation of Runge Kutta (RK) algorithm
-Based on 'Orbital Mechanics for Engineering Students' Section 1.8.1
+""" Implementation of numerical solvers.
+- Runge Kutta (RK) algorithm
+- Heun's method
+Based on 'Orbital Mechanics for Engineering Students' Section 1.8
 Written by: J.X.J. Bannwarth
 """
 import numpy as np
