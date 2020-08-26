@@ -15,7 +15,7 @@ Written by: J.X.J. Bannwarth
 """
 import numpy as np
 import matplotlib.pyplot as plt
-from runge_kutta import SolveRK14
+from numerical_solvers import SolveRK14
 import collections
 
 # Title
@@ -116,4 +116,3 @@ for set in sets:
     tOut.append(tOutTmp)
 
 PlotFig123(tOut, xOut, sets, tExact, xExact)
-
