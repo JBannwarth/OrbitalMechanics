@@ -56,7 +56,7 @@ def PlotResponse(t, y, tExact=None, xExact=None):
 def PlotFig123(tOut, xOut, sets, tExact, xExact):
     # Note that for some reason the textbook normalises both axes - we replicate 
     # this here for consistency
-    fig, axs = plt.subplots(5, figsize=(8,12))
+    _, axs = plt.subplots(5, figsize=(8,12))
 
     # First plot: exact answer
     axs[0].plot(tExact / tExact[-1], xExact / np.max(xExact), color="black")
