@@ -18,9 +18,6 @@ import matplotlib.pyplot as plt
 from numerical_solvers import SolveRK14
 import collections
 
-# Title
-print("Orbital Mechanics for Engineering Students Example 1.18")
-
 
 # Exact response - answer from Example 1.17
 def CartSystemExactResponse(t, m=1.0, omegaN=1.0, zeta=0.03, F0=1.0,
@@ -83,36 +80,39 @@ def PlotFig123(tOut, xOut, sets, tExact, xExact):
     plt.tight_layout()
     plt.show()
 
+if __name__ == "__main__":
+    # Title
+    print("Orbital Mechanics for Engineering Students Example 1.18")
 
-# (1) Solve individual example
-# Parameters
-y0 = np.array([0, 0])
-tMax = 110.0
-h = 1.0
-order = 4
+    # (1) Solve individual example
+    # Parameters
+    y0 = np.array([0, 0])
+    tMax = 110.0
+    h = 1.0
+    order = 4
 
-# Solve equation numerically
-ys, ts = SolveRK14(Rates, y0, tMax, h, order)
+    # Solve equation numerically
+    ys, ts = SolveRK14(Rates, y0, tMax, h, order)
 
-# Get exact answer
-tExact = np.linspace(0.0, tMax, 5000)
-xExact = CartSystemExactResponse(tExact)
+    # Get exact answer
+    tExact = np.linspace(0.0, tMax, 5000)
+    xExact = CartSystemExactResponse(tExact)
 
-# Plot results
-PlotResponse(ts, ys, tExact, xExact)
+    # Plot results
+    PlotResponse(ts, ys, tExact, xExact)
 
-# (2) Run through different order and h combinations to reproduce Figure 1.23
-TestSet = collections.namedtuple("TestSet", "order h")
-sets = [
-    TestSet(1, 0.01), TestSet(1, 0.1), TestSet(2, 0.1), TestSet(2, 0.5),
-    TestSet(3, 0.5), TestSet(3, 1.0), TestSet(4, 1.0), TestSet(4, 2.0)
-]
+    # (2) Run through different order and h combinations to reproduce Figure 1.23
+    TestSet = collections.namedtuple("TestSet", "order h")
+    sets = [
+        TestSet(1, 0.01), TestSet(1, 0.1), TestSet(2, 0.1), TestSet(2, 0.5),
+        TestSet(3, 0.5), TestSet(3, 1.0), TestSet(4, 1.0), TestSet(4, 2.0)
+    ]
 
-xOut = []
-tOut = []
-for set in sets:
-    yOut, tOutTmp = SolveRK14(Rates, y0, tMax, set.h, set.order)
-    xOut.append(yOut[:, 0])
-    tOut.append(tOutTmp)
+    xOut = []
+    tOut = []
+    for set in sets:
+        yOut, tOutTmp = SolveRK14(Rates, y0, tMax, set.h, set.order)
+        xOut.append(yOut[:, 0])
+        tOut.append(tOutTmp)
 
-PlotFig123(tOut, xOut, sets, tExact, xExact)
+    PlotFig123(tOut, xOut, sets, tExact, xExact)
