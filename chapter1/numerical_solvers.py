@@ -139,11 +139,11 @@ def SolveRKF45(f, y0, tSpan=np.array([0., 10.0]), tol=1.e-8):
 
     # Solve for each time-step
     ts = [t0]
-    ys = [y0]
+    ys = [deepcopy(y0)]
     h = (tMax - t0)/100.
 
-    t = ts[-1]
-    y = ys[-1]
+    t = deepcopy(ts[-1])
+    y = deepcopy(ys[-1])
     while ts[-1] < tMax:
         tTilde = t + A * h
         fTilde = np.zeros((6, nStates))
