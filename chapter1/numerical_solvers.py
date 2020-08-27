@@ -114,7 +114,7 @@ def SolveHeun(f, y0, tMax=10.0, h=0.01, tol=1.e-6, iterMax=100):
     h : float
         (Fixed) time-step.
     tol : float
-        Tolerance between f and f*.
+        Tolerance between y_n+1 and y*.
     iterMax : int
         Maximum number of iterations for a single time-step.
 
