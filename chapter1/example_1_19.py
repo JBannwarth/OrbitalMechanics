@@ -14,6 +14,34 @@ Initial conditions:
     x = xDot = 0
 Written by: J.X.J. Bannwarth
 """
+import numpy as np
+import matplotlib.pyplot as plt
+from numerical_solvers import SolveHeun
+from example_1_18 import Rates, CartSystemExactResponse
 
 # Title
 print("Orbital Mechanics for Engineering Students Example 1.19")
+
+# Set-up
+Y0 = np.array([0., 0.])
+h = [1., 0.1]
+tMax = 110.
+
+# Solve equation
+y1,  t1 = SolveHeun(Rates, Y0, tMax, h[0])
+y01, t01 = SolveHeun(Rates, Y0, tMax, h[1])
+xExact = CartSystemExactResponse(t01)
+
+# Plot results
+fig = plt.figure()
+plt.grid()
+plt.plot(t1, y1[:, 0], color="red", label=f"h = {h[0]}")
+plt.plot(t01, y01[:, 0], color="black", label=f"h = {h[1]}")
+plt.plot(t01, xExact, "--", color="green", label=f"Analytical")
+plt.xlabel("Time (s)")
+plt.ylabel("$x$ (m)")
+plt.legend()
+plt.xlim((0, 110))
+plt.ylim((-2, 2))
+plt.tight_layout()
+plt.show()
