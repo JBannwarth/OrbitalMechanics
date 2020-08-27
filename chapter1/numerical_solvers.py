@@ -98,3 +98,56 @@ def SolveRK14(f, y0, tMax=10.0, h=0.01, order=4):
         ys[n, :] = RK14(ys[n - 1, :], ts[n - 1], f, h, order)
 
     return (ys, ts)
+
+
+def SolveHeun(f, y0, tMax=10.0, h=0.01, tol=1.e-6, iterMax=100):
+    """Use Heun's method to numerically solve ODE.
+
+    Parameters
+    ----------
+    f : function
+        Function to compute the derivative of y.
+    y0 : numpy.array
+        Initial value of state.
+    tMax : float
+        Time to solve until.
+    h : float
+        (Fixed) time-step.
+    tol : float
+        Tolerance between f and f*.
+    iterMax : int
+        Maximum number of iterations for a single time-step.
+
+    Returns
+    -------
+    ys : numpy.array
+        State time response.
+    ts : numpy.array
+        Time vector
+    """
+    # Assign output vectors
+    ts = np.arange(0.0, tMax, h)
+    ys = np.zeros((ts.shape[0], y0.shape[0]))
+
+    # Initial conditions if non-zero
+    ys[0, :] = y0
+
+    # Solve for each time-step
+    for n in range(1, ts.shape[0]):
+        d = np.inf
+        y1 = ys[n-1, :]
+
+        f1 = f(ts[n-1], y1)
+        y2 = y1 + h*f1
+        idx = 0
+        while d > tol and idx < iterMax:
+            y2p = y2
+            f2 = f(ts[n], y2p)
+            y2 = y1 + h*(f1+f2)/2.
+
+            # Find max error
+            d = np.max(np.abs((y2-y2p)/(y2+np.finfo(float).eps)))
+            idx += 1
+        ys[n, :] = y2p
+
+    return (ys, ts)
