@@ -138,7 +138,7 @@ def SolveRKF45(f, y0, tSpan=np.array([0., 10.0]), tol=1.e-8):
     tMax = tSpan[1]
 
     # Solve for each time-step
-    ts = [0]
+    ts = [t0]
     ys = [y0]
     h = (tMax - t0)/100.
 
