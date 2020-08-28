@@ -8,6 +8,7 @@ Written by: J.X.J. Bannwarth
 import numpy as np
 import matplotlib.pyplot as plt
 from numerical_solvers import SolveRKF45
+import matplotlib.ticker
 
 
 # Differential equations
@@ -40,6 +41,10 @@ ax[0].set_xlabel("Time (min)")
 ax[0].set_ylabel("Position (km)")
 ax[0].set_xlim((0., 70.))
 ax[0].set_ylim((0.5e4, 1.5e4))
+mf = matplotlib.ticker.ScalarFormatter(useMathText=True)
+mf.set_powerlimits((-1,1))
+ax[0].yaxis.set_major_formatter(mf)
+ax[0].set_yticks(ticks=[0.5e4,1e4,1.5e4])
 
 # Velocity
 ax[1].grid()
