@@ -1,6 +1,6 @@
 """ Orbital Mechanics for Engineering Students Problem 1.2
 Question:
-Given four vectors A, B, C, and D and the identities from Problem 1.3, show
+Given four vectors A, B, C, and D and the identities from Problem 1.1, show
     (A x B) . (C x D) = (A . C)(B . D) - (A . D)(B. C)
 Written by: J.X.J. Bannwarth
 """
