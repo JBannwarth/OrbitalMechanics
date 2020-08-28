@@ -18,7 +18,7 @@ def AreEqual(A, B):
 
 
 # Title
-print("Orbital Mechanics for Engineering Students Example 1.20")
+print("Orbital Mechanics for Engineering Students Problem 1.1")
 
 # Coordinate system
 N = CoordSys3D('N')
