@@ -20,7 +20,7 @@ from numerical_solvers import SolveRKF45
 
 
 # Differential equations
-def Rates(t, Y, sigma=10., beta=8./3., rho=28.):
+def Rates(t, Y, sigma=10., #beta=8./3., rho=28.):
     F = np.zeros(Y.shape)
     F[0] = sigma*(Y[1]-Y[0])
     F[1] = Y[0]*(rho-Y[2]) - Y[1]
