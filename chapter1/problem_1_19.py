@@ -12,11 +12,11 @@ instead of
 Written by: J.X.J. Bannwarth
 """
 import numpy as np
-from numerical_solvers import SolveRKF45, SolveRK14
+from orbitutils.solvers import rkf45
 
 
 # Differential equations
-def Rates(t, Y):
+def rates(t, Y):
     F = np.zeros(Y.shape)
     F[0] = Y[1]
     F[1] = Y[2]
@@ -32,7 +32,7 @@ tSpan = np.array([0., 3.])
 Y0 = np.array([0., 0., 0., 0.])
 
 # Solve numerically
-y, t = SolveRKF45(Rates, Y0, tSpan)
+y, t = rkf45(rates, Y0, tSpan)
 
 # Show answer
 print(f"y({t[-1]:.3f}) = {y[-1,0]:.3f}")

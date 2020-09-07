@@ -16,11 +16,11 @@ Written by: J.X.J. Bannwarth
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-from numerical_solvers import SolveRKF45
+from orbitutils.solvers import rkf45
 
 
 # Differential equations
-def Rates(t, Y, sigma=10., beta=8./3., rho=28.):
+def rates(t, Y, sigma=10., beta=8./3., rho=28.):
     F = np.zeros(Y.shape)
     F[0] = sigma*(Y[1]-Y[0])
     F[1] = Y[0]*(rho-Y[2]) - Y[1]
@@ -36,7 +36,7 @@ tSpan = np.array([0., 20.])
 Y0 = np.array([0., 1., 0.])
 
 # Solve numerically
-y, t = SolveRKF45(Rates, Y0, tSpan)
+y, t = rkf45(rates, Y0, tSpan)
 
 # Plot answer
 fig = plt.figure()

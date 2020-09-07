@@ -7,7 +7,7 @@ Written by: J.X.J. Bannwarth
 """
 import numpy as np
 import matplotlib.pyplot as plt
-from numerical_solvers import SolveRKF45
+from orbitutils.solvers import rkf45
 import matplotlib.ticker
 
 
@@ -29,7 +29,7 @@ print("Orbital Mechanics for Engineering Students Example 1.20")
 tSpan = np.array([0, 70.*60.])
 Y0 = np.array([6500000., 7800.])
 
-y, t = SolveRKF45(SpacecraftRates, Y0, tSpan)
+y, t = rkf45(SpacecraftRates, Y0, tSpan)
 
 # Plot results - Fig. 1.26
 fig, ax = plt.subplots(2)

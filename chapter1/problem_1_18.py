@@ -8,7 +8,7 @@ for y at t = 20, if the initial conditions at t=0 are:
 Written by: J.X.J. Bannwarth
 """
 import numpy as np
-from numerical_solvers import SolveRKF45, SolveRK14
+from orbitutils.solvers import rkf45
 
 
 # Differential equations
@@ -27,7 +27,7 @@ tSpan = np.array([0., 20.])
 Y0 = np.array([1., 0., 0., 0.])
 
 # Solve numerically
-y, t = SolveRKF45(Rates, Y0, tSpan)
+y, t = rkf45(Rates, Y0, tSpan)
 
 # Show answer
 print(f"y({t[-1]:.3f}) = {y[-1,0]:.3f}")

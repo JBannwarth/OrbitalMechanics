@@ -9,7 +9,7 @@ Written by: J.X.J. Bannwarth
 """
 import numpy as np
 import matplotlib.pyplot as plt
-from numerical_solvers import SolveRKF45
+from orbitutils.solvers import rkf45
 
 
 # Differential equations
@@ -28,7 +28,7 @@ tSpan = np.array([1., 4.])
 Y0 = np.array([0., 1.])
 
 # Solve numerically
-y, t = SolveRKF45(Rates, Y0, tSpan)
+y, t = rkf45(Rates, Y0, tSpan)
 
 # Show answer
 print(f"y({t[-1]:.3f}) = {y[-1,0]:.3f}")

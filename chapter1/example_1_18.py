@@ -15,7 +15,7 @@ Written by: J.X.J. Bannwarth
 """
 import numpy as np
 import matplotlib.pyplot as plt
-from numerical_solvers import SolveRK14
+from orbitutils.solvers import rk14
 import collections
 
 
@@ -92,7 +92,7 @@ if __name__ == "__main__":
     order = 4
 
     # Solve equation numerically
-    ys, ts = SolveRK14(Rates, y0, tMax, h, order)
+    ys, ts = rk14(Rates, y0, tMax, h, order)
 
     # Get exact answer
     tExact = np.linspace(0.0, tMax, 5000)
@@ -111,7 +111,7 @@ if __name__ == "__main__":
     xOut = []
     tOut = []
     for set in sets:
-        yOut, tOutTmp = SolveRK14(Rates, y0, tMax, set.h, set.order)
+        yOut, tOutTmp = rk14(Rates, y0, tMax, set.h, set.order)
         xOut.append(yOut[:, 0])
         tOut.append(tOutTmp)
 

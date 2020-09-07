@@ -13,11 +13,11 @@ Written by: J.X.J. Bannwarth
 """
 import numpy as np
 import matplotlib.pyplot as plt
-from numerical_solvers import SolveRKF45, SolveRK14
+from orbitutils.solvers import rkf45, rk14
 
 
 # Differential equations
-def Rates(t, Y):
+def rates(t, Y):
     F = np.zeros(Y.shape)
     F[0] = -0.5*Y[1] + Y[2]
     F[1] = 0.5*Y[0] - Y[2]/np.sqrt(2.)
@@ -33,8 +33,8 @@ tSpan = np.array([0., 20.])
 Y0 = np.array([1., 0., 0.])
 
 # Solve numerically
-y, t = SolveRKF45(Rates, Y0, tSpan)
-y, t = SolveRK14(Rates, Y0, tMax=20, h=1e-4)
+y, t = rkf45(rates, Y0, tSpan)
+y, t = rk14(rates, Y0, tMax=20, h=1e-4)
 
 # Show answer
 print(f"x({t[-1]:.3f}) = {y[-1,0]:.3f}")

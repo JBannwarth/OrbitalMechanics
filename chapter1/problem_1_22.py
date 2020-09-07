@@ -8,7 +8,7 @@ Written by: J.X.J. Bannwarth
 """
 import numpy as np
 import matplotlib.pyplot as plt
-from numerical_solvers import SolveRKF45, SolveRK14
+from orbitutils.solvers import rkf45
 import datetime
 
 
@@ -33,7 +33,7 @@ tSpan = np.array([0., 418850.])
 Y0 = np.array([r0, 0.])
 
 # Solve numerically
-y, t = SolveRKF45(Rates, Y0, tSpan)
+y, t = rkf45(Rates, Y0, tSpan)
 r = y[:, 0]
 
 # Find time for the surface of the moon to reach the surface of the earth

@@ -16,7 +16,7 @@ Written by: J.X.J. Bannwarth
 """
 import numpy as np
 import matplotlib.pyplot as plt
-from numerical_solvers import SolveHeun
+from orbitutils.solvers import heun
 from example_1_18 import Rates, CartSystemExactResponse
 
 # Title
@@ -28,8 +28,8 @@ h = [1., 0.1]
 tMax = 110.
 
 # Solve equation
-y1,  t1 = SolveHeun(Rates, Y0, tMax, h[0])
-y01, t01 = SolveHeun(Rates, Y0, tMax, h[1])
+y1,  t1 = heun(Rates, Y0, tMax, h[0])
+y01, t01 = heun(Rates, Y0, tMax, h[1])
 xExact = CartSystemExactResponse(t01)
 
 # Plot results
