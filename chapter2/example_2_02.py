@@ -63,6 +63,8 @@ plot_path(axA, G, color="black", name="$G$")
 axA.view_init(20, 30)
 format_plot(axA)
 
+plt.show()
+
 # (b) Motion of m2 and G relative to m1
 figB = plt.figure("(b) Motion relative to m1.")
 axB = figB.add_subplot(111, projection="3d")
@@ -70,6 +72,8 @@ plot_path(axB, R2 - R1, color="green", name="$m_2$")
 plot_path(axB, G - R1, color="black", name="$G$")
 axB.view_init(20, 80)
 format_plot(axB)
+
+plt.show()
 
 # (c) Motion of m1 and m2 relative to G
 figC = plt.figure("(c) Motion relative to G.")
