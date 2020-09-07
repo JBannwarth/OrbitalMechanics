@@ -11,21 +11,22 @@ Written by: J.X.J. Bannwarth
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-from orbitutils.orbiting_bodies import two_body_3d
+from orbitutils.orbiting_bodies import two_body_3d, n_body_3d
 import matplotlib.ticker
 
-
 # Functions
-def format_plot(ax):
+def format_plot(ax, threeD=True):
     ax.set_xlabel("$X$ (km)")
     ax.set_ylabel("$Y$ (km)")
-    ax.set_zlabel("$Z$ (km)")
+    if threeD:
+        ax.set_zlabel("$Z$ (km)")
     # Label formatting
     mf = matplotlib.ticker.ScalarFormatter(useMathText=True)
     mf.set_powerlimits((-2, 2))
     ax.xaxis.set_major_formatter(mf)
     ax.yaxis.set_major_formatter(mf)
-    ax.zaxis.set_major_formatter(mf)
+    if threeD:
+        ax.zaxis.set_major_formatter(mf)
     ax.legend()
 
 
@@ -33,6 +34,11 @@ def plot_path(ax, R, color="red", name="$m$"):
     ax.plot(R[:, 0], R[:, 1], R[:, 2], color=color, label=f"Path of {name}")
     ax.scatter(R[(0, -1), (0, 0)], R[(0, -1), (1, 1)],
                R[(0, -1), (2, 2)], color=color, label=name)
+
+
+def plot_path_2d(ax, R, color="red", name="$m$"):
+    ax.plot(R[:, 0], R[:, 1], color=color, label=f"Path of {name}")
+    ax.scatter(R[(0, -1), (0, 0)], R[(0, -1), (1, 1)], color=color, label=name)
 
 
 # Title
@@ -82,5 +88,55 @@ plot_path(axC, R1 - G, color="red", name="$m_1$")
 plot_path(axC, R2 - G, color="green", name="$m_2$")
 axC.view_init(20, 80)
 format_plot(axC)
+
+plt.show()
+
+# Bonus: 3-body problem
+R_0 = np.array(
+    [[0., 300000., 600000.],
+     [0., 0., 0.],
+     [0., 0., 0.]]
+    ) * 1000.
+
+V_0 = np.array(
+    [[0., 250., 0.],
+     [0., 250., 0.],
+     [0., 0., 0.]]
+    ) * 1000.
+
+M = np.array([1.e29, 1.e29, 1.e29])
+tSpanBonus = np.array([0., 67000.])
+
+# Note: results obtained from solving using RKF45 diverge from those obtained
+# using ODE45 as time increases (confirmed by using different RKF45
+# implementations)
+yBonus, tBonus = n_body_3d(R_0, V_0, M, tSpanBonus)
+yBonus = yBonus/1000.
+
+# Extract vectors of interest
+R1Bonus = yBonus[:,0:3]
+R2Bonus = yBonus[:,3:6]
+R3Bonus = yBonus[:,6:9]
+
+# Compute center of gravity
+GBonus = (M[0]*R1Bonus + M[1]*R2Bonus + M[2]*R3Bonus) / np.sum(M)
+
+# Plot output
+fig = plt.figure("Bonus - 3 body problem wrt inertial")
+axBonus = fig.add_subplot(111)
+plot_path_2d(axBonus, GBonus , color="black", name="$G$")
+plot_path_2d(axBonus, R1Bonus, color="red"  , name="$m_1$")
+plot_path_2d(axBonus, R2Bonus, color="green", name="$m_2$")
+plot_path_2d(axBonus, R3Bonus, color="blue" , name="$m_3$")
+format_plot(axBonus, threeD=False)
+
+plt.show()
+
+fig = plt.figure("Bonus - 3 body problem wrt G")
+axBonus = fig.add_subplot(111)
+plot_path_2d(axBonus, R1Bonus - GBonus, color="red"  , name="$m_1$")
+plot_path_2d(axBonus, R2Bonus - GBonus, color="green", name="$m_2$")
+plot_path_2d(axBonus, R3Bonus - GBonus, color="blue" , name="$m_3$")
+format_plot(axBonus, threeD=False)
 
 plt.show()
