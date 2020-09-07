@@ -15,6 +15,8 @@ from orbitutils.orbiting_bodies import two_body_3d, n_body_3d
 import matplotlib.ticker
 
 # Functions
+
+
 def format_plot(ax, threeD=True):
     ax.set_xlabel("$X$ (km)")
     ax.set_ylabel("$Y$ (km)")
@@ -96,13 +98,13 @@ R_0 = np.array(
     [[0., 300000., 600000.],
      [0., 0., 0.],
      [0., 0., 0.]]
-    ) * 1000.
+) * 1000.
 
 V_0 = np.array(
     [[0., 250., 0.],
      [0., 250., 0.],
      [0., 0., 0.]]
-    ) * 1000.
+) * 1000.
 
 M = np.array([1.e29, 1.e29, 1.e29])
 tSpanBonus = np.array([0., 67000.])
@@ -114,9 +116,9 @@ yBonus, tBonus = n_body_3d(R_0, V_0, M, tSpanBonus)
 yBonus = yBonus/1000.
 
 # Extract vectors of interest
-R1Bonus = yBonus[:,0:3]
-R2Bonus = yBonus[:,3:6]
-R3Bonus = yBonus[:,6:9]
+R1Bonus = yBonus[:, 0:3]
+R2Bonus = yBonus[:, 3:6]
+R3Bonus = yBonus[:, 6:9]
 
 # Compute center of gravity
 GBonus = (M[0]*R1Bonus + M[1]*R2Bonus + M[2]*R3Bonus) / np.sum(M)
@@ -124,19 +126,19 @@ GBonus = (M[0]*R1Bonus + M[1]*R2Bonus + M[2]*R3Bonus) / np.sum(M)
 # Plot output
 fig = plt.figure("Bonus - 3 body problem wrt inertial")
 axBonus = fig.add_subplot(111)
-plot_path_2d(axBonus, GBonus , color="black", name="$G$")
-plot_path_2d(axBonus, R1Bonus, color="red"  , name="$m_1$")
+plot_path_2d(axBonus, GBonus, color="black", name="$G$")
+plot_path_2d(axBonus, R1Bonus, color="red", name="$m_1$")
 plot_path_2d(axBonus, R2Bonus, color="green", name="$m_2$")
-plot_path_2d(axBonus, R3Bonus, color="blue" , name="$m_3$")
+plot_path_2d(axBonus, R3Bonus, color="blue", name="$m_3$")
 format_plot(axBonus, threeD=False)
 
 plt.show()
 
 fig = plt.figure("Bonus - 3 body problem wrt G")
 axBonus = fig.add_subplot(111)
-plot_path_2d(axBonus, R1Bonus - GBonus, color="red"  , name="$m_1$")
+plot_path_2d(axBonus, R1Bonus - GBonus, color="red", name="$m_1$")
 plot_path_2d(axBonus, R2Bonus - GBonus, color="green", name="$m_2$")
-plot_path_2d(axBonus, R3Bonus - GBonus, color="blue" , name="$m_3$")
+plot_path_2d(axBonus, R3Bonus - GBonus, color="blue", name="$m_3$")
 format_plot(axBonus, threeD=False)
 
 plt.show()
