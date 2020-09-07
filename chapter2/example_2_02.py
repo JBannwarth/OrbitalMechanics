@@ -11,8 +11,29 @@ Written by: J.X.J. Bannwarth
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-from utilities import TwoBody3D
+from orbitutils.orbiting_bodies import two_body_3d
 import matplotlib.ticker
+
+
+# Functions
+def format_plot(ax):
+    ax.set_xlabel("$X$ (km)")
+    ax.set_ylabel("$Y$ (km)")
+    ax.set_zlabel("$Z$ (km)")
+    # Label formatting
+    mf = matplotlib.ticker.ScalarFormatter(useMathText=True)
+    mf.set_powerlimits((-2, 2))
+    ax.xaxis.set_major_formatter(mf)
+    ax.yaxis.set_major_formatter(mf)
+    ax.zaxis.set_major_formatter(mf)
+    ax.legend()
+
+
+def plot_path(ax, R, color="red", name="$m$"):
+    ax.plot(R[:, 0], R[:, 1], R[:, 2], color=color, label=f"Path of {name}")
+    ax.scatter(R[(0, -1), (0, 0)], R[(0, -1), (1, 1)],
+               R[(0, -1), (2, 2)], color=color, label=name)
+
 
 # Title
 print("Orbital Mechanics for Engineering Students Example 2.2")
@@ -27,82 +48,35 @@ m2 = 10.**26
 tSpan = np.array([0., 480.])
 
 # Solve the problem
-y, t = TwoBody3D(R1_0, V1_0, R2_0, V2_0, tSpan, m1, m2)
-y = y / 1000. # convert to km
-R1 = y[:,0:3]
-R2 = y[:,3:6]
+y, t = two_body_3d(R1_0, R2_0, V1_0, V2_0, m1, m2, tSpan)
+y = y / 1000.  # convert to km
+R1 = y[:, 0:3]
+R2 = y[:, 3:6]
 G = (m1*R1 + m2*R2)/(m1+m2)
-
-# Measurements relative to m1
-R1m1 = R1 - R1
-R2m1 = R2 - R1
-Gm1 = G - R1
-
-# Measurements relative to G
-R1G = R1 - G
-R2G = R2 - G
 
 # (a) Motion of m1 and m2 relative to the inertial frame
 figA = plt.figure("(a) Motion relative to inertial frame.")
 axA = figA.add_subplot(111, projection="3d")
-axA.plot(R1[:,0],R1[:,1],R1[:,2], color="red", label='Path of $m_1$')
-axA.scatter(R1[(0,-1),(0,0)],R1[(0,-1),(1,1)],R1[(0,-1),(2,2)], color="red", label='$m_1$')
-axA.plot(R2[:,0],R2[:,1],R2[:,2], color="green", label='Path of $m_2$')
-axA.scatter(R2[(0,-1),(0,0)],R2[(0,-1),(1,1)],R2[(0,-1),(2,2)], color="green", label='$m_2$')
-axA.plot(G[:,0],G[:,1],G[:,2], color="black", label='Path of $G$')
-axA.scatter(G[(0,-1),(0,0)],G[(0,-1),(1,1)],G[(0,-1),(2,2)], color="black", label='$m_2$')
-axA.view_init(20,30)
-axA.set_xlabel("$X$")
-axA.set_ylabel("$Y$")
-axA.set_zlabel("$Z$")
-# Label formatting
-mf = matplotlib.ticker.ScalarFormatter(useMathText=True)
-mf.set_powerlimits((-2,2))
-axA.xaxis.set_major_formatter(mf)
-axA.yaxis.set_major_formatter(mf)
-axA.zaxis.set_major_formatter(mf)
-
-axA.legend()
-plt.show()
+plot_path(axA, R1, color="red", name="$m_1$")
+plot_path(axA, R2, color="green", name="$m_2$")
+plot_path(axA, G, color="black", name="$G$")
+axA.view_init(20, 30)
+format_plot(axA)
 
 # (b) Motion of m2 and G relative to m1
-figA = plt.figure("(b) Motion relative to m1.")
-axA = figA.add_subplot(111, projection="3d")
-axA.plot(R2m1[:,0],R2m1[:,1],R2m1[:,2], color="green", label='Path of $m_2$')
-axA.scatter(R2m1[0,0],R2m1[0,1],R2m1[0,2], color="green", label='$m_2$')
-axA.plot(Gm1[:,0],Gm1[:,1],Gm1[:,2], color="black", label='Path of $G$')
-axA.scatter(Gm1[(0,-1),(0,0)],Gm1[(0,-1),(1,1)],Gm1[(0,-1),(2,2)], color="black", label='$m_2$')
-axA.view_init(20,80)
-axA.set_xlabel("$X$")
-axA.set_ylabel("$Y$")
-axA.set_zlabel("$Z$")
-# Label formatting
-mf = matplotlib.ticker.ScalarFormatter(useMathText=True)
-mf.set_powerlimits((-2,2))
-axA.xaxis.set_major_formatter(mf)
-axA.yaxis.set_major_formatter(mf)
-axA.zaxis.set_major_formatter(mf)
-axA.legend()
-plt.show()
+figB = plt.figure("(b) Motion relative to m1.")
+axB = figB.add_subplot(111, projection="3d")
+plot_path(axB, R2 - R1, color="green", name="$m_2$")
+plot_path(axB, G - R1, color="black", name="$G$")
+axB.view_init(20, 80)
+format_plot(axB)
 
-# (b) Motion of m1 and m2 relative to G
-figA = plt.figure("(b) Motion relative to G.")
-axA = figA.add_subplot(111, projection="3d")
-axA.plot(R1G[:,0],R1G[:,1],R1G[:,2], color="red", label='Path of $m_1$')
-axA.scatter(R1G[(0,-1),(0,0)],R1G[(0,-1),(1,1)],R1G[(0,-1),(2,2)], color="red", label='$m_1$')
-axA.plot(R2G[:,0],R2G[:,1],R2G[:,2], color="green", label='Path of $m_2$')
-axA.scatter(R2G[0,0],R2G[0,1],R2m1[0,2], color="green", label='$m_2$')
-axA.view_init(20,80)
-axA.set_xlabel("$X$")
-axA.set_ylabel("$Y$")
-axA.set_zlabel("$Z$")
-# Label formatting
-mf = matplotlib.ticker.ScalarFormatter(useMathText=True)
-mf.set_powerlimits((-2,2))
-axA.xaxis.set_major_formatter(mf)
-axA.yaxis.set_major_formatter(mf)
-axA.zaxis.set_major_formatter(mf)
-axA.legend()
-plt.show()
+# (c) Motion of m1 and m2 relative to G
+figC = plt.figure("(c) Motion relative to G.")
+axC = figC.add_subplot(111, projection="3d")
+plot_path(axC, R1 - G, color="red", name="$m_1$")
+plot_path(axC, R2 - G, color="green", name="$m_2$")
+axC.view_init(20, 80)
+format_plot(axC)
 
-print("Done")
+plt.show()
